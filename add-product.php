@@ -13,12 +13,12 @@ if(isset($_POST) && $_SERVER["REQUEST_METHOD"] == "POST"){
 	if(!empty($_POST['unit'])){
 		$unit = stripslashes($_POST['unit']);
 	}else{
-		array_push($errors, 'Variable unit empty');
+		array_push($errors, 'Variable unit is empty');
 	}
 	if(!empty($_POST['product'])){
 		$product = stripslashes($_POST['product']);
 	}else{
-		array_push($errors, 'Variable product empty');
+		array_push($errors, 'Variable product is empty');
 	}
 
 	if(count($errors) < 1){
@@ -26,28 +26,34 @@ if(isset($_POST) && $_SERVER["REQUEST_METHOD"] == "POST"){
 		$result = mysqli_query($conn, $sql);
 		if($result){
 			$id_product = (mysqli_fetch_assoc(mysqli_query($conn, "SELECT MAX(`id`) FROM ingredients")))['MAX(`id`)'];
-		?>
-		<tr>
-			<th><?php echo $id_product; ?></th>
-			<th>
-				<input type="text" name="edit-count" value="<?php echo $count; ?>">	
-			</th>
-			<th>
-				<input type="text" name="edit-unit" value="<?php echo $unit; ?>">		
-			</th>
-			<th>
-				<input type="text" name="edit-product" value="<?php echo $product; ?>">		
-			</th>
-			<th>
-				<form method="POST">
-					<input hidden name="id_product" value="<?php echo $table['id']; ?>">
-					<input type="submit" name="edit-product" value="Save Edited">
-				</form>
-				<a onclick="deleteProduct(this);" href="javascript:;" data-id_product="<?php echo $id_product; ?>">Delete</a>
-			</th>
-		</tr>	
-	<?php		
+			$response = array(
+				'id' => $id_product,
+				'status' => true,
+				'count'=> $count,
+				'unit' => $unit,
+				'product'=> $product,
+				'errors' => 'Ingredient added successfully'
+			);
+		}else{
+			$response = array(
+				'id' => '',
+				'status' => false,
+				'count'=> '',
+				'unit' => '',
+				'product'=> '',
+				'errors' => 'Bad database entry!'
+			);
 		}
+	}else{
+		$response = array(
+			'id' => '',
+			'status' => false,
+			'count'=> '',
+			'unit' => '',
+			'product'=> '',
+			'errors' => $errors
+		);
 	}
+	echo json_encode($response);
 }	
 ?>

@@ -26,11 +26,23 @@ if(isset($_POST) && $_SERVER["REQUEST_METHOD"] == "POST"){
 			$sql = "UPDATE `ingredients` SET `count` = '".$count."', `unit` = '".$unit."', `product` = '".$product."' WHERE `ingredients`.`id` = ".$id;	
 			$result = mysqli_query($conn, $sql);
 			if($result){
-				echo 'true';
+				$response = array(
+					'status' => true,
+					'errors' => 'Ingredient edited successfully'
+				);
 			}else{
-				echo 'false';
+				$response = array(
+					'status' => false,
+					'errors' => 'Bad database entry!'
+				);
 			}
+		}else{
+			$response = array(
+				'status' => false,
+				'errors' => $errors
+			);
 		}
+		echo json_encode($response);
 	}
 }
 ?>

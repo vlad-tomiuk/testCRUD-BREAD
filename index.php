@@ -10,20 +10,56 @@ global $conn;
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Test</title>
 	<style>
+	a{
+		color: #df1b1b;
+	}
 	table, td, th {
 	  border: 1px solid;
 	}
+	tr:nth-child(even),
+	tr:nth-child(even) input{
+		background-color: #dfdfdf;
+	}
+	.edit_product input[name=edit-product]{
+		color: #45af23;
+    	font-weight: 700;
+    	width: 100%;
+	}
 	table {
-	  width: 100%;
+	  width: 50%;
+	  margin: 0 auto;
 	  border-collapse: collapse;
 	}
 	table input{
 		text-align: center;
 		border: none;
+		background: #fff;
+	}
+	table input:hover{
+		cursor: pointer;
 	}
 	.add_product{
 		width: fit-content;
 		margin: 10px auto 0 auto;
+	}
+	.info-error,
+	.info-good{
+		display: none;
+	    margin: 10px auto;
+	    text-align: center;
+	    width: 602px;
+	    padding: 15px;
+	    border-radius: 5px;    
+	}
+	.info-error{
+		background: #ffdbdb;
+	    border: 1px solid #fbbebe;
+	    color: #a11a1a;	
+	}
+	.info-good{
+		background: #a8dfaf;
+    	border: 1px solid #6cb360;
+		color: #49761f;
 	}
 </style>
 </head>
@@ -74,6 +110,8 @@ global $conn;
 		<input type="text" name="product" placeholder="Product">
 		<input type="submit" name="add_product" value="Add Product">
 	</form>
+	<span class="info-error"></span>
+	<span class="info-good"></span>
 <script src="main.js"></script>
 </body>
 </html>

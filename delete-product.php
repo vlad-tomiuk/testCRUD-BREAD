@@ -8,10 +8,17 @@ if(isset($_POST) && $_SERVER["REQUEST_METHOD"] == "POST"){
 		$sql = "DELETE FROM `ingredients` WHERE `ingredients`.`id` = " . $id;	
 		$result = mysqli_query($conn, $sql);
 		if($result){
-			echo 'true';
+			$response = array(
+				'status' => true,
+				'errors' => 'Successfully delete '
+			);
 		}else{
-			echo 'false';
+			$response = array(
+				'status' => false,
+				'errors' => 'Bad database entry!'
+			);
 		}
+		echo json_encode($response);
 	}
 }
 ?>
